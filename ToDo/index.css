@@ -42,3 +42,6 @@
 .crossed{
     text-decoration: line-through;
 }
+.marked{
+    background-color: aqua;
+}
