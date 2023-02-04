@@ -42,6 +42,16 @@
 .crossed{
     text-decoration: line-through;
 }
+
 .marked{
     background-color: aqua;
+}
+.task > p{
+    flex: 5;
+    height: 100%;
+    padding: 15px;
+}
+.task button{
+    flex: 1;
+    height: 100%;
 }
