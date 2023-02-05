@@ -1,7 +1,139 @@
 var input = document.getElementById("input")
 var add = document.getElementById("addBtn")
-
 var tasks = document.getElementById("tasks")
+
+var marked = document.getElementById("marked")
+var all = document.getElementById("all")
+
+tasks.addEventListener("contextmenu", (e)=>{
+    e.preventDefault()
+    console.log(e.target)
+})
+
+all.addEventListener("click", ()=>{
+    tasks.innerHTML = ""
+    marked.classList.remove("active")
+    for(let el of JSON.parse(localStorage["marked"])["active"]){
+        if(el.length > 3){ 
+            let li = document.createElement("li")
+
+            let p = document.createElement("p")
+            p.innerText = el
+            li.appendChild(p);
+            li.classList.add("task") 
+            li.classList.add("marked")  
+            btns(li, tasks,false)
+            btns(li, tasks,true)
+
+
+
+            tasks.appendChild(li)
+            p.addEventListener("click", (e)=>{
+                p.classList.toggle("crossed")
+                update(tasks)
+            })
+        } 
+    }
+    for(let el of JSON.parse(localStorage["marked"])["crossed"]){
+        if(el.length > 3){
+            let li = document.createElement("li")
+            let p = document.createElement("p")
+            p.innerText = el
+            li.appendChild(p);
+            li.classList.add("task")
+            li.classList.add("marked") 
+            p.classList.add("crossed")
+            input.value = ""
+            btns(li, tasks,false)
+            btns(li, tasks,true)
+            tasks.appendChild(li)
+            p.addEventListener("click", (e)=>{
+                p.classList.toggle("crossed")
+                update(tasks)
+            })
+        } 
+    }
+    for(let el of JSON.parse(localStorage["tasks"])["active"]){
+        if(el.length > 3){ 
+            let li = document.createElement("li")
+            let p = document.createElement("p")
+            p.innerText = el
+            li.appendChild(p);
+            li.classList.add("task")   
+            btns(li, tasks,false)
+            btns(li, tasks,true)
+            tasks.appendChild(li)
+            p.addEventListener("click", (e)=>{
+                p.classList.toggle("crossed")
+                update(tasks)
+            })
+        } 
+    }
+    for(let el of JSON.parse(localStorage["tasks"])["crossed"]){
+        if(el.length > 3){
+            let li = document.createElement("li")
+            let p = document.createElement("p")
+            p.innerText = el
+            li.appendChild(p);
+            li.classList.add("task")
+            p.classList.add("crossed")
+            input.value = ""
+            btns(li, tasks,false)
+            btns(li, tasks,true)
+            tasks.appendChild(li)
+            p.addEventListener("click", (e)=>{
+                p.classList.toggle("crossed")
+                update(tasks)
+            })
+        } 
+    }
+    
+})
+marked.addEventListener("click", ()=>{
+    marked.classList.add("active")
+    tasks.innerHTML = ""
+    for(let el of JSON.parse(localStorage["marked"])["active"]){
+        if(el.length > 3){ 
+            let li = document.createElement("li")
+
+            let p = document.createElement("p")
+            p.innerText = el
+            li.appendChild(p);
+            li.classList.add("task") 
+            li.classList.add("marked")  
+            btns(li, tasks,false)
+            btns(li, tasks,true)
+
+
+
+            tasks.appendChild(li)
+            p.addEventListener("click", (e)=>{
+                p.classList.toggle("crossed")
+                update(tasks)
+            })
+        } 
+    }
+    for(let el of JSON.parse(localStorage["marked"])["crossed"]){
+        if(el.length > 3){
+            let li = document.createElement("li")
+            let p = document.createElement("p")
+            p.innerText = el
+            li.appendChild(p);
+            li.classList.add("task")
+            li.classList.add("marked") 
+            p.classList.add("crossed")
+            input.value = ""
+            btns(li, tasks,false)
+            btns(li, tasks,true)
+            tasks.appendChild(li)
+            p.addEventListener("click", (e)=>{
+                p.classList.toggle("crossed")
+                update(tasks)
+            })
+        } 
+    }
+})
+
 
 if(Object.keys(localStorage).length == 2){
     for(let el of JSON.parse(localStorage["marked"])["active"]){
@@ -117,6 +249,10 @@ add.addEventListener("click", (e)=>{
         btns(li, tasks,true)
         // moveBtns(e)
         tasks.appendChild(li)
+
+        if(marked.classList.contains("active")){
+            li.classList.toggle("marked")
+        }
 
         update(tasks)
         
